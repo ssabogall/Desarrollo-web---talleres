@@ -8,7 +8,8 @@ export default class Routes {
         router.get('/about', HomeController.about);
         router.get('/contact', HomeController.contact);
         router.get('/books', HomeController.listBooks);
-        router.get('/books/:id', HomeController.show);
+        router.get('/books/:id', HomeController.show); /*necesitas organizar el tema de los controladores, para separarlo de homecontroller y crear un bookscontroller */
+
         return router;
     }
 }

@@ -2,10 +2,10 @@
 import BookReviews from '@/components/BookReviews.vue';
 import { BookService } from '@/services/BookService.js';
 import { useRoute } from 'vue-router';
+import type { BookInterface } from '@/interfaces/BookInterface.js';
+import { onMounted, ref } from 'vue';
 
-const route = useRoute();
-const bookId = Number(route.params.id);
-const book = BookService.getBookById(bookId);
+const book = ref<BookInterface | null>(null);
 // functions
 function formatToCOP(price: number): string {
   const formatter = new Intl.NumberFormat('es-CO', {
@@ -17,6 +17,12 @@ function formatToCOP(price: number): string {
 
   return formatter.format(price).replace(/^\s*\$\s?/, '');
 }
+
+onMounted(async () => {
+    const route = useRoute();
+    const bookId = Number(route.params.id);
+    book.value = await BookService.getBookById(bookId);
+  });
 </script>
 
 <template>
@@ -27,11 +33,8 @@ function formatToCOP(price: number): string {
           <div class="bg-white rounded-lg shadow-md p-8 mb-8">
             <div class="flex items-start space-x-8">
               <div>
-                <img
-                  src="https://picsum.photos/seed/picsum/536/354"
-                  alt="Book Cover"
-                  class="object-cover rounded shadow-sm w-72 h-auto"
-                />
+                <img src="https://picsum.photos/seed/picsum/536/354" alt="Book Cover"
+                  class="object-cover rounded shadow-sm w-72 h-auto" />
               </div>
               <div>
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ book.title }}</h2>

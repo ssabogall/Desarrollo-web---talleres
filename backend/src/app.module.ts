@@ -2,7 +2,6 @@ import { BooksModule } from './books/books.module';
 import { Module } from '@nestjs/common';
 import { HomeModule } from './home/home.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import process from 'process';
 
 
 @Module({
